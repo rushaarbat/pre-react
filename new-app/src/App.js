@@ -1,7 +1,9 @@
 
 // import './App.css';
 // import ConditionalComponent from './ConditionalComponent';
+import FormComponent from './FormComponent';
 import ListComponent from './ListComponent';
+import PersonFormComponent from './PersonFormComponent';
 // import FalseComponent from './FalseComponent';
 // import TrueComponent from './TrueComponent';
 // import MySecondParentsClass from './MySecondParentsClass';
@@ -16,7 +18,9 @@ function App() {
     {name==="Rushabh" && <TrueComponent/>} */}
 
     {/* <ConditionalComponent/> */}
-    <ListComponent/>
+    {/* <ListComponent/> */}
+    {/* <FormComponent/> */}
+    <PersonFormComponent/>
     </div>
     
   );

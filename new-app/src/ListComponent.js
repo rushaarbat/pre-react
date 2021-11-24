@@ -3,7 +3,7 @@ import React,{Component} from "react";
     state={
         myList : [],
         inputValue: "",
-        inputValue1: "",
+        
     }
 
 
@@ -24,14 +24,6 @@ this.setState({myList:myListCopy, inputValue : ""});
         this.setState({inputValue : event.target.value});
     };
 
-    onInputTextChange1= (event1)=>
-    {
-        console.log(event1.target.value);
-        this.setState({inputValue1 : event1.target.value});
-    };
-
-
-
 
 
     render(){
@@ -44,13 +36,6 @@ this.setState({myList:myListCopy, inputValue : ""});
             
             </input>
 
-            <input   value= {this.state.inputValue1}
-                    onChange= {this.onInputTextChange1}     >
-            
-            </input>
-
-
-            
             <button onClick ={this.onAdd}> Add</button>
             <h2> In Side List Component</h2>
             {this.state.myList.map((element,index)=>(
