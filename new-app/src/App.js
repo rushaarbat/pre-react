@@ -2,7 +2,10 @@
 // import './App.css';
 // import ConditionalComponent from './ConditionalComponent';
 import FormComponent from './FormComponent';
+import LifeCycle from './LifeCycle';
+import LifeCycleUpdate from './LifeCycleUpdate';
 import ListComponent from './ListComponent';
+import NewPersonComponent from './NewPersonComponent';
 import PersonFormComponent from './PersonFormComponent';
 // import FalseComponent from './FalseComponent';
 // import TrueComponent from './TrueComponent';
@@ -20,7 +23,10 @@ function App() {
     {/* <ConditionalComponent/> */}
     {/* <ListComponent/> */}
     {/* <FormComponent/> */}
-    <PersonFormComponent/>
+    {/* <PersonFormComponent/> */}
+    {/* <NewPersonComponent/> */}
+    <LifeCycle/>
+    <LifeCycleUpdate/>
     </div>
     
   );
