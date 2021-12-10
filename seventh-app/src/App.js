@@ -1,0 +1,26 @@
+import logo from './logo.svg';
+import './App.css';
+import HooksSample from './HooksSample';
+import PortalDemo from './PortalDemo';
+import ProfilerDemo from './ProfilerDemo';
+import UserCreate from './UserCreate';
+import UserRead from './UserRead';
+import UserDelete from './UserDelete';
+
+function App() {
+  const onClickHandler = () =>{
+    console.log("Clicked");
+  }
+  return (
+    <div className="App" onClick={onClickHandler}>
+     {/* <HooksSample/> */}
+     {/* <PortalDemo/>
+     <ProfilerDemo/> */}
+     {/* <UserCreate/> */}
+     <UserDelete/>
+     
+         </div>
+  );
+}
+
+export default App;
