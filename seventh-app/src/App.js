@@ -5,7 +5,8 @@ import PortalDemo from './PortalDemo';
 import ProfilerDemo from './ProfilerDemo';
 import UserCreate from './UserCreate';
 import UserRead from './UserRead';
-import UserDelete from './UserDelete';
+import UserDelete from './UserSample';
+import UserSample from './UserSample';
 
 function App() {
   const onClickHandler = () =>{
@@ -17,7 +18,7 @@ function App() {
      {/* <PortalDemo/>
      <ProfilerDemo/> */}
      {/* <UserCreate/> */}
-     <UserDelete/>
+     <UserSample/>
      
          </div>
   );

@@ -4,17 +4,28 @@ import { useEffect, useState } from "react";
 export default () => {
   const [postsList, setPostsList] = useState([]);
 
-  const [title, setTitle] = useState("");
+  //const [title, setTitle] = useState("");
 
-  const [body, setBody] = useState("");
+  //const [titleEditMode, setTitleEditMode] = useState("");
+
+  //const [body, setBody] = useState("");
+
+ // const [bodyEditMode, setBodyEditMode] = useState("");
 
   const [postId, setPostId] = useState(0);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
+  const [editObject, setEditObject] = useState({});
+
+  const [postObject, setPostObject] = useState({});
+
+  const [selectedPostId, setSelectedPostId] = useState(-1);
+
   useEffect(() => {
     fetchData();
   }, []);
+
   const fetchData = () => {
     //code to fetch data from server
     axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
@@ -25,52 +36,69 @@ export default () => {
     });
   };
 
-  const onTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
+  // ---------------eventObject handler for edit all the functions without writing sepertae ones -------
 
-  const onBodyChange = (event) => {
-    setBody(event.target.value);
+  const onEditObjectHandler = (event) => {
+    //  const titleOld={
+    //       title:0,
+    //       body:0,
+    // }
+    // const titleNew = {
+    //   title: titleOld.title,
+    //   body: bodyOld.body,
+    //   ...titleOld,
+    //   title:const,
+    // }
+
+    if (event) {
+      const { name, value } = event.target;
+      setEditObject({
+        ...editObject,
+        [name]: value,
+      });
+    }
+  };
+ 
+  //---------- global handler ------
+
+  const onPostChangeHandler = (event) => {
+    if (event) {
+      const { name, value } = event.target;
+      setPostObject({
+        ...postObject,
+        [name]: value,
+      });
+    }
   };
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    console.log(title, body);
+    //console.log(title, body);
+
     if (!isEditMode) {
       //code to add new records
       axios
         .post("https://jsonplaceholder.typicode.com/posts", {
-          title,
-          body,
+          ...postObject,
           userId: 1,
         })
         .then((response) => {
           console.log(response);
           alert("Added...!");
+
           //fetch the data again
           fetchData("");
+
           //reset from
-          setTitle("");
-          setBody("");
-        });
-    } else {
-      //code to edit the records
-      if (postId > 0) {
-        axios
-          .put("https://jsonplaceholder.typicode.com/posts/" + postId, {
-            id: postId,
-            title,
-            body,
-            postId: 1,
-          })
-          .then((response) => {
-            if (response) {
-              fetchData();
-              alert("Updated...!");
-              onResetClickHandler();
-            }
+          setPostObject({
+            title: "",
+            body: "",
           });
-      }
+
+         
+        });
+
+    
     }
   };
 
@@ -83,12 +111,30 @@ export default () => {
       });
   };
 
+  const onResetEditRow = () =>{
+    setSelectedPostId(-1);
+    setEditObject({ title: "",
+    body: "",})
+  };
+
   const onEditClickHandler = (postObject) => {
     console.log(postObject);
-    setIsEditMode(true);
-    setTitle(postObject.title);
-    setBody(postObject.body);
+
+    // setIsEditMode(true);
+
+    // // setTitle(postObject.title);
+    // setTitleEditMode(postObject.title);
+
+    // // setBody(postObject.body);
+    // setBodyEditMode(postObject.body);
+    // setPostId(postObject.id);
+    // setSelectedPostId(postObject.id);
+
+    setEditObject({
+      ...postObject,
+    });
     setPostId(postObject.id);
+    setSelectedPostId(postObject.id);
   };
 
   const onResetClickHandler = (event) => {
@@ -96,23 +142,57 @@ export default () => {
       event.preventDefault();
     }
     setIsEditMode(false);
-    setTitle("");
-    setBody("");
+
+    setPostObject({
+      title: "",
+      body: "",
+    });
   };
+
+
+  const onUpdateClickHandler = (event)=>{
+    if (postId > 0) {
+          axios
+            .put("https://jsonplaceholder.typicode.com/posts/" + postId, {
+              id: postId,
+            ...editObject,
+              postId: 1,
+            })
+            .then((response) => {
+              if (response) {
+                fetchData();
+                alert("Updated...!");
+                onResetEditRow();
+              }
+            });
+  }
+}
 
   return (
     <>
       <h1>From HooksSample</h1>
       <h2>Post Form</h2>
+      {/* ---------------------------------------------------------- */}
       <form onSubmit={onFormSubmit}>
         <label>Title:</label>
-        <input name="title" value={title} onChange={onTitleChange} />
+        <input
+          name="title"
+          value={postObject.title}
+          onChange={onPostChangeHandler}
+        />
+
         <label>Body:</label>
-        <input name="body" value={body} onChange={onBodyChange} />
+        <input
+          name="body"
+          value={postObject.body}id
+          onChange={onPostChangeHandler}
+        />
         <br />
         <button type="submit">{isEditMode ? "Update" : "Submit"}</button>
         {isEditMode && <button onClick={onResetClickHandler}>Reset</button>}
       </form>
+
+      {/* --------------------------------------------------------- */}
       <table>
         <thead>
           <tr>
@@ -126,9 +206,61 @@ export default () => {
             return (
               <tr key={post.id}>
                 <td>{post.id}</td>
-                <td>{post.title}</td>
-                <td>{post.body}</td>
 
+                <td>
+                  
+                  {selectedPostId === post.id ? (
+                    <input
+                      name="title"
+                      value={editObject.title}
+                      onChange={onEditObjectHandler}
+                    />
+                  ) : (
+                    post.title
+                  )}
+                </td>
+
+                <td>
+                  
+                  {selectedPostId === post.id ? (
+                    <input
+                      name="body"
+                      value={editObject.body}
+                      onChange={onEditObjectHandler}
+                    />
+                  ) : (
+                    post.body
+                  )}
+                </td>
+
+                <td>
+                  {selectedPostId === post.id ? (
+                    <>
+                      <button onClick={onUpdateClickHandler}>Update</button>
+                      <button onClick={onResetEditRow}> Reset </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => {
+                          onDeleteClickHandler(post.id);
+                        }}
+                      >
+                        Delete
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          onEditClickHandler(post);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </>
+                  )}
+                </td>
+
+{/*                 
                 <td>
                   <button
                     onClick={() => {
@@ -147,7 +279,7 @@ export default () => {
                   >
                     Edit
                   </button>
-                </td>
+                </td> */}
               </tr>
             );
           })}
