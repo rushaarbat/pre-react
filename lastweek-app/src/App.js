@@ -1,17 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-import NormalProp from './NormalProp';
-import Incrementer from './Incrementer';
-import Increment from './Increment';
-import NewIncrement from './NewIncrement';
-import Decrementer from './Decrementer';
-import Decrement from './Decrement';
-import NewDecrement from './NewDecrement';
-import DemoComponent from './DemoComponent';
-
+import logo from "./logo.svg";
+import "./App.css";
+// import "./Styles.scss";
+import NormalProp from "./NormalProp";
+import Incrementer from "./Incrementer";
+import Increment from "./Increment";
+import NewIncrement from "./NewIncrement";
+import Decrementer from "./Decrementer";
+import Decrement from "./Decrement";
+import NewDecrement from "./NewDecrement";
+import DemoComponent from "./DemoComponent";
+import ConditionalRenderedComponent from "./ConditionalRenderedComponent";
+import SassDemo from "./SassDemo";
+import RadiumDemo from "./RadiumDemo";
 function App() {
+  // const [showcomponent, setShowComponent] = useState(true);
+  // const onClickhandler = () => {
+  //   console.log("clicked");
+  //   setShowComponent(!showcomponent);
+  // };
   return (
     <div className="App">
+      <h1>I Im IN App</h1>
+
+      {/* <SassDemo /> */}
+      <RadiumDemo />
       {/* <NormalProp render={(someValue) =>{
         return "old Name  "  +someValue;
       }}/>
@@ -37,8 +49,11 @@ function App() {
         return < NewDecrement value={value} onNewClickHandeler={onNewClickHandeler} />;
       }}/> */}
 
-
-      <DemoComponent/>
+      {/* <DemoComponent/> */}
+      {/* 
+      <br />
+      <button onClick={onClickhandler}>Toggle Component</button>
+      {showcomponent && <ConditionalRenderedComponent />} */}
     </div>
   );
 }
